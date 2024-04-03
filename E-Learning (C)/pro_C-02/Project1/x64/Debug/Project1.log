@@ -1,0 +1,9 @@
+﻿  pro_C-02.cpp
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(8,8): warning C4477: 'scanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'double *' です
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(10,8): warning C4477: 'scanf' : 書式文字列 '%d' には、型 'int *' の引数が必要ですが、可変個引数 1 は型 'double *' です
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(8,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(10,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(17,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(19,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\Project1\pro_C-02.cpp(25,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Project1.vcxproj -> C:\Users\user\source\repos\til\E-Learning (C)\pro_C-02\x64\Debug\Project1.exe
