@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3E9A400D-A875-48ED-AA6D-0A118E06BF93}|Project2\\Project2.vcxproj|C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\Project2\\pro_C-02.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3E9A400D-A875-48ED-AA6D-0A118E06BF93}|Project2\\Project2.vcxproj|solutionrelative:Project2\\pro_C-02.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CAF67966-15AA-442C-B12E-57CE58E34F99}|Project1\\Project1.vcxproj|C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\Project1\\pro_C-01.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{CAF67966-15AA-442C-B12E-57CE58E34F99}|Project1\\Project1.vcxproj|solutionrelative:Project1\\pro_C-01.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "pro_C-02.cpp",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\Project2\\pro_C-02.cpp",
+              "RelativeDocumentMoniker": "Project2\\pro_C-02.cpp",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\Project2\\pro_C-02.cpp",
+              "RelativeToolTip": "Project2\\pro_C-02.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-04-03T02:35:04.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "pro_C-01.cpp",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\Project1\\pro_C-01.cpp",
+              "RelativeDocumentMoniker": "Project1\\pro_C-01.cpp",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\pro_C_01\\Project1\\pro_C-01.cpp",
+              "RelativeToolTip": "Project1\\pro_C-01.cpp",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-04-03T01:52:44.196Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
