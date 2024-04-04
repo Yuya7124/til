@@ -161,7 +161,8 @@ int main(void) {
 
 	// Drill 03-12
 	int month;
-	printf("何月ですか");
+	printf("何月ですか:");
+	scanf("%d", &month);
 	switch (month) {
 		case 3:
 		case 4:
