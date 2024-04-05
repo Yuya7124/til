@@ -119,7 +119,7 @@ void person_av(const int tensu[STUDENTS][SUBJECTS], double ave[STUDENTS]) {
 }
 
 int main(void) {
-	/*int num1, num2, num3;
+	int num1, num2, num3;
 	puts("二つの整数を入力してください。");
 	printf("整数1:");
 	scanf("%d", &num1);
@@ -167,12 +167,12 @@ int main(void) {
 	int x[2][3] = { {1,2,3},{4,5,6} };
 	int y[3][2] = { {1,5},{5,3},{8,1} };
 	int ans[2][2] = {};
-	mul(x, y, ans);*/
+	mul(x, y, ans);
 	
-	int tensu[STUDENTS][SUBJECTS] = { {88, 90, 73}, {44, 79, 40}, {74, 63, 55}, {95, 89, 99}, {77, 24, 34} };
+	int tensu1[STUDENTS][SUBJECTS] = { {88, 90, 73}, {44, 79, 40}, {74, 63, 55}, {95, 89, 99}, {77, 24, 34} };
 	double ave[STUDENTS] = { 0 };
 
-	person_av(tensu, ave);
+	person_av(tensu1, ave);
 	puts("各学生の平均点:");
 	for (int i = 0; i < STUDENTS; i++) {
 		printf("%d番の学生:%2f\n", i, ave[i]);
@@ -188,7 +188,7 @@ int main(void) {
 		else if (i == ENGLISH) {
 			printf("English:");
 		}
-		printf("%d\n", max_point(tensu, i));
+		printf("%d\n", max_point(tensu1, i));
 	}
 	return 0;
 }
