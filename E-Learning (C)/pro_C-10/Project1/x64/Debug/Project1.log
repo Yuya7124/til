@@ -1,0 +1,8 @@
+﻿  pro_C-10.cpp
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\Project1\pro_C-10.cpp(126,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\Project1\pro_C-10.cpp(128,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\Project1\pro_C-10.cpp(130,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\Project1\pro_C-10.cpp(147,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\Project1\pro_C-10.cpp(149,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\Project1\pro_C-10.cpp(151,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Project1.vcxproj -> C:\Users\user\source\repos\til\E-Learning (C)\pro_C-10\x64\Debug\Project1.exe
