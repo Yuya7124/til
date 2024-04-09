@@ -5,6 +5,7 @@
 #include <algorithm>
 using namespace std;
 
+// n枚カードの順列
 void permutation(const vector<string>& cards, vector<string>& result, unsigned n) {
 	if (result.size() == n) {
 		for (auto& i : result) cout << i;
@@ -21,6 +22,7 @@ void permutation(const vector<string>& cards, vector<string>& result, unsigned n
 	}
 }
 
+// n枚カードの組み合わせ
 void combination(const vector<string>& cards, vector<string>& result, unsigned n) {
 	if (result.size() == n) {
 		for (auto& i : result) cout << i;
