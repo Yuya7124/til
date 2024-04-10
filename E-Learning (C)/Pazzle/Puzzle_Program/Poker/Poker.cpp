@@ -5,12 +5,11 @@
 #include <time.h>
 #include <iomanip>
 #include <math.h>
-
 using namespace std;
 
 const int MARK = 4;
 const int NUMBER = 13;
-const int JOKER = 2 + 1;
+const int JOKER = 2;
 const int HAND = 5;
 
 const int TOTAL_CARDS = MARK * NUMBER + JOKER;
@@ -29,7 +28,7 @@ int top;	//配られたカードの一番上の位置
 //カード情報
 static const char* mark_str[MARK] = { "C","D","H","S" };
 static const char* num_str[NUMBER] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-static const char* joker_str[JOKER] = { "", "JOKER", "JOKER" };
+static const char* joker_str[JOKER] = { "", "JOKER" };
 
 //手札の各マークの枚数
 static int count_mark[MARK];
@@ -62,7 +61,7 @@ void init(void) {
 void shuffle(void) {
 	unsigned int i, j;
 	CARD tmp;
-	i = TOTAL_CARDS;
+	i = TOTAL_CARDS - 1;
 	while (i > 0) {
 		j = rand() % (i + 1);
 		tmp = card[j];
@@ -74,10 +73,10 @@ void shuffle(void) {
 		else {
 			cout << "card[" << i - 1 << "] = JOKER" << endl;
 		}*/
-		
+
 		// シャッフル範囲縮小
 		i--;
-		
+
 	}
 }
 
@@ -102,17 +101,17 @@ void show(void) {
 		}
 		else {
 			if (hand_card[i].joker == 0) {
-				cout << mark_str[hand_card[i].mark] << num_str[hand_card[i].num] << endl;
+				cout << mark_str[hand_card[i].mark] << num_str[hand_card[i].num];
 			}
 			else {
-				cout << "JOKER" << endl;
+				cout << "JOKER";
 			}
 		}
 	}
 }
 
 // 手札の交換(プレイヤー)
-void exchange_player(void){
+void exchange_player(void) {
 	char input;
 	bool exchange[HAND];
 
@@ -139,7 +138,6 @@ void exchange_player(void){
 			}
 		}
 	}
-
 	// カード交換
 	for (int i = 0;i < HAND;i++) {
 		if (exchange[i] == true) {
@@ -187,6 +185,40 @@ void exchange_com(void) {
 	}
 }
 
+// ジョーカーの枚数
+int joker_count(void) {
+	int jk_count = 0;
+	// ジョーカーの枚数の初期化
+	for (int i = 0; i < JOKER; i++) {
+		count_joker[i] = 0;
+	}
+
+	for (int i = 0; i < HAND; i++) {
+		if (hand_card[i].joker > 0) {
+			jk_count++;
+		}		
+	}
+	return jk_count;
+}
+
+// 各カードの集計情報閲覧
+void card_view(void) {
+	cout << endl;
+	// 各マークの枚数
+	for (int i = 0; i < MARK; i++) {
+		cout << mark_str[i] << ": " << count_mark[i] << " ";
+	}
+	cout << endl;
+	// 各数字の枚数
+	for (int i = 0; i < NUMBER; i++) {
+		cout << num_str[i] << ": " << count_num[i] << " ";
+	}
+	cout << endl;
+	// ジョーカーの枚数
+	cout << "JOKER: " << joker_count() << endl;
+}
+
+// 各種カードの集計
 void cards_count(void) {
 	// 各マークの枚数の初期化
 	for (int i = 0; i < MARK; i++) {
@@ -196,37 +228,226 @@ void cards_count(void) {
 	for (int i = 0; i < NUMBER; i++) {
 		count_num[i] = 0;
 	}
-	// ジョーカーの枚数の初期化
-	for (int i = 0; i < JOKER; i++) {
-		count_joker[i] = 0;
-	}
-
 	// 各種類の集計
 	for (int i = 0; i < HAND; i++) {
 		if (hand_card[i].joker == 0) {
 			count_mark[hand_card[i].mark]++;
 			count_num[hand_card[i].num]++;
 		}
-		else {
-			count_joker[hand_card[i].joker]++;
+	}
+	// card_view();
+}
+
+// ワンペア
+bool OnePair(void) {
+	int pairs = 0;
+	for (int i = 0; i < NUMBER; i++) {
+		if (count_num[i] == 2) {
+			pairs++;
+		}	
+	}
+	if (pairs == 1) {
+		return true;
+	}
+	if (pairs == 0 && joker_count() == 1) {
+		return true;
+	}
+	return false;
+}
+
+// ツーペア
+bool TwoPairs(void) {
+	int pairs = 0;
+	for (int i = 0; i < NUMBER; i++) {
+		if (count_num[i] == 2) {
+			pairs++;
+		}
+		if (pairs == 2) {
+			return true;
 		}
 	}
-	// 各マークの枚数
-	for (int i = 0; i < MARK; i++) {
-		cout << mark_str[i] << ": " << count_mark[i] << endl;
-	}
-	cout << endl;
-	// 各数字の枚数
+	return false;
+}
+
+// スリーカード
+bool ThreeCards(void) {
 	for (int i = 0; i < NUMBER; i++) {
-		cout << num_str[i] << ": " << count_num[i] << endl;
+		if (count_num[i] == 3) {
+			return true;
+		}
+		if (count_num[i] == 2 && joker_count() == 1) {
+			return true;
+		}
+		if (count_num[i] == 1 && joker_count() == 2) {
+			return true;
+		}
 	}
-	
-	// ジョーカーの枚数
-	int jk_count = 0;
-	for (int i = 0; i < JOKER; i++) {	
-		jk_count += count_joker[i];
+	return false;
+}
+
+// ストレート
+bool Straight(void) {
+	for (int j = 0; j < (NUMBER - HAND); j++) {
+		for (int i = j; i < j + HAND; i++) {
+			if (count_num[i] == 1) {
+				if (i == j + HAND) {
+					return true;
+				}
+			}
+			if (joker_count() > 0) {
+				if (hand_card[i].joker > 0) {
+					if (i != j) {
+						count_num[hand_card[i].num - 1] = 1;
+					}
+				}
+			}
+		}
 	}
-	cout << "JOKER: " << jk_count << endl;
+	return false;
+}
+
+// フラッシュ
+bool Flush(void) {
+	for (int i = 0; i < MARK; i++) {
+		if (count_mark[i] == 5) {
+			return true;
+		}
+		if (count_mark[i] == 4 && joker_count() == 1) {
+			return true;
+		}
+		if (count_mark[i] == 3 && joker_count() == 2) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// フルハウス
+bool FullHouse(void) {
+	int three_cards = 0;
+	int two_cards = 0;
+	for (int i = 0; i < NUMBER; i++) {
+		if (count_num[i] == 2) {
+			two_cards++;
+		}
+		if (count_num[i] == 3) {
+			three_cards++;
+		}
+	}
+	if (three_cards == 1 && two_cards == 1) {
+		return true;
+	}
+	if (two_cards == 2 && joker_count() == 1) {
+		return true;
+	}
+	return false;
+}
+
+// フォーカード
+bool FourCards(void) {
+	for (int i = 0; i < NUMBER; i++) {
+		if (count_num[i] == 4) {
+			return true;
+		}	
+		if (count_num[i] == 3 && joker_count() == 1) {
+			return true;
+		}
+		if (count_num[i] == 2 && joker_count() == 2) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// ストレートフラッシュ
+bool StraightFlush(void) {
+	if (Straight() && Flush()) {
+		return true;
+	}
+	return false;
+}
+
+// ロイヤルストレートフラッシュ
+bool RoyalStraightFlush(void) {
+	if (Flush()) {
+		if (count_num[NUMBER - 1] == 1) {
+			for (int i = NUMBER - (HAND - 1); i < NUMBER; i++) {
+				if (count_num[i] == 1) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+// ファイブカード
+bool FiveCards(void) {
+	for (int i = 0; i < NUMBER; i++) {
+		if (count_num[i] == 4 && joker_count() == 1) {
+			return true;
+		}
+		if (count_num[i] == 3 && joker_count() == 2) {
+			return true;
+		}
+	}
+	return false;
+}
+
+string hand_strenght(void) {
+	string strenght = "ノーペア"; //　手札の役
+
+	if (FiveCards()) {
+		strenght = "ファイブカード";
+		return strenght;
+	}
+
+	if (RoyalStraightFlush()) {
+		strenght = "ロイヤルストレートフラッシュ";
+		return strenght;
+	}
+
+	if (StraightFlush()) {
+		strenght = "ストレートフラッシュ";
+		return strenght;
+	}
+
+	if (FourCards()) {
+		strenght = "フォーカード";
+		return strenght;
+	}
+
+	if (FullHouse()) {
+		strenght = "フルハウス";
+		return strenght;
+	}
+
+	if (Flush()) {
+		strenght = "フラッシュ";
+		return strenght;
+	}
+
+	if (Straight()) {
+		strenght = "ストレート";
+		return strenght;
+	}
+
+	if (ThreeCards()) {
+		strenght = "スリーカード";
+		return strenght;
+	}
+
+	if (TwoPairs()) {
+		strenght = "ツーペア";
+		return strenght;
+	}
+
+	if (OnePair()) {
+		strenght = "ワンペア";
+		return strenght;
+	}
+
+	return strenght;
 }
 
 int main(void) {
@@ -236,22 +457,25 @@ int main(void) {
 
 	init();
 	shuffle();
-	for (int i = 0;i < (player + com_player);i++) {
+	for (int i = 0; i < (player + com_player); i++) {
 		deal();
 	}
-	
+
 	cout << "あなたの手札:　";
 	show();
+	cout << endl;
 
 	exchange_player();
 	cout << "あなたの手札:　";
 	show();
 	cards_count();
+	cout << " -> " << hand_strenght() << endl;
 
 	for (int i = 0; i < com_player;i++) {
 		exchange_com();
 		cout << "COM_" << i + 1 << " の手札:　";
 		show();
 		cards_count();
-	}	
+		cout << " -> " << hand_strenght() << endl;
+	}
 }
