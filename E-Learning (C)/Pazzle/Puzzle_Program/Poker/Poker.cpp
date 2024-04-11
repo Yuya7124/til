@@ -88,6 +88,18 @@ void deal(void) {
 	}
 }
 
+//各カード昇順に並べ替え
+void card_sort(void) {
+	CARD tmp;
+	for (int i = 0; i < HAND; i++) {
+		if (hand_card[i - 1].num > hand_card[i].num) {
+			tmp = hand_card[i - 1];
+			hand_card[i - 1] = hand_card[i];
+			hand_card[i] = tmp;
+		}
+	}
+}
+
 // 手札情報
 void show(void) {
 	for (int i = 0; i < HAND; i++) {
@@ -196,7 +208,7 @@ int joker_count(void) {
 	for (int i = 0; i < HAND; i++) {
 		if (hand_card[i].joker > 0) {
 			jk_count++;
-		}		
+		}
 	}
 	return jk_count;
 }
@@ -244,7 +256,7 @@ bool OnePair(void) {
 	for (int i = 0; i < NUMBER; i++) {
 		if (count_num[i] == 2) {
 			pairs++;
-		}	
+		}
 	}
 	if (pairs == 1) {
 		return true;
@@ -287,19 +299,76 @@ bool ThreeCards(void) {
 
 // ストレート
 bool Straight(void) {
-	for (int j = 0; j < (NUMBER - HAND); j++) {
-		for (int i = j; i < j + HAND; i++) {
-			if (count_num[i] == 1) {
-				if (i == j + HAND) {
-					return true;
+	int i, j;
+	int change_num = 0;
+	if (joker_count() > 0) {
+		for (i = 0; i < NUMBER; i++) {
+			// ジョーカーあり
+			change_num = joker_count();
+			if (i == 0 && change_num != 0) {
+				if (count_num[0] == 0 && count_num[1] == 0 && count_num[2] == 1) {
+					count_num[0]++;
+					count_num[1]++;
+					change_num -= 2;
+					break;
+				}
+				if (count_num[0] == 0 && count_num[1] == 1) {
+					count_num[0]++;
+					change_num--;
+					break;
 				}
 			}
-			if (joker_count() > 0) {
-				if (hand_card[i].joker > 0) {
-					if (i != j) {
-						count_num[hand_card[i].num - 1] = 1;
+			if (i == 1 && change_num != 0) {
+				if (count_num[1] == 0 && count_num[2] == 0 && count_num[3] == 1) {
+					count_num[1]++;
+					count_num[2]++;
+					change_num -= 2;
+					break;
+				}
+				if (count_num[1] == 1 && count_num[2] == 0) {
+					count_num[1]++;
+					change_num--;
+					break;
+				}
+			}
+			if (i > 1 && i <= (NUMBER - 3) && change_num != 0) {
+				if (count_num[i] == 0 && count_num[i + 1] == 0 && count_num[i + 2] == 1) {
+					count_num[i]++;
+					count_num[i + 1]++;
+					change_num -= 2;
+					break;
+				}
+				if (count_num[i - 1] == 1 && count_num[i] == 0) {
+					count_num[i]++;
+					change_num--;
+					break;
+				}
+			}
+			if (i > (NUMBER - 3) && change_num != 0) {
+				if (i != (NUMBER - 1)) {
+					if (count_num[i] == 1 && count_num[i + 1] == 0) {
+						count_num[i]++;
+						change_num--;
+						break;
 					}
 				}
+				else {
+					if (count_num[i - 1] == 1 && count_num[i] == 0) {
+						count_num[i]++;
+						change_num--;
+						break;
+					}
+				}
+			}
+		}
+	}
+	for (j = 0; j < (NUMBER - HAND); j++) {
+		for (i = j; i < j + HAND; i++) {
+			if (count_num[i] != 1) {
+				break;
+			}
+			if (i == j + HAND) {
+				return true;
 			}
 		}
 	}
@@ -348,7 +417,7 @@ bool FourCards(void) {
 	for (int i = 0; i < NUMBER; i++) {
 		if (count_num[i] == 4) {
 			return true;
-		}	
+		}
 		if (count_num[i] == 3 && joker_count() == 1) {
 			return true;
 		}
@@ -369,16 +438,48 @@ bool StraightFlush(void) {
 
 // ロイヤルストレートフラッシュ
 bool RoyalStraightFlush(void) {
-	if (Flush()) {
-		if (count_num[NUMBER - 1] == 1) {
-			for (int i = NUMBER - (HAND - 1); i < NUMBER; i++) {
-				if (count_num[i] == 1) {
-					return true;
+	int change_num = 0;
+
+	if (!Flush()) {
+		return false;
+	}
+	if (count_num[NUMBER - 1] != 1) {
+		return false;
+	}
+	for (int i = (NUMBER - 1) - (HAND - 1); i < NUMBER; i++) {
+		if (joker_count() > 0) {
+			change_num = joker_count();
+			// ジョーカーあり
+			if (count_num[i] == 0 && change_num != 0) {
+				switch (i) {
+				case 8:
+					count_num[i]++;
+					change_num--;
+					break;
+				case 9:
+					count_num[i]++;
+					change_num--;
+					break;
+				case 10:
+					count_num[i]++;
+					change_num--;
+					break;
+				case 11:
+					count_num[i]++;
+					change_num--;
+					break;
+				case 12:
+					count_num[i]++;
+					change_num--;
+					break;
 				}
 			}
 		}
+		if (count_num[i] != 1) {
+			return false;
+		}
 	}
-	return false;
+	return true;
 }
 
 // ファイブカード
@@ -460,12 +561,14 @@ int main(void) {
 	for (int i = 0; i < (player + com_player); i++) {
 		deal();
 	}
+	card_sort();
 
 	cout << "あなたの手札:　";
 	show();
 	cout << endl;
 
 	exchange_player();
+	card_sort();
 	cout << "あなたの手札:　";
 	show();
 	cards_count();
@@ -478,4 +581,5 @@ int main(void) {
 		cards_count();
 		cout << " -> " << hand_strenght() << endl;
 	}
+	return 0;
 }
