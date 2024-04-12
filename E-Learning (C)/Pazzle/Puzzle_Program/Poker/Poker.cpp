@@ -5,6 +5,8 @@
 #include <time.h>
 #include <iomanip>
 #include <math.h>
+#include <algorithm>
+
 using namespace std;
 
 const int MARK = 4;
@@ -73,10 +75,8 @@ void shuffle(void) {
 		else {
 			cout << "card[" << i - 1 << "] = JOKER" << endl;
 		}*/
-
 		// シャッフル範囲縮小
 		i--;
-
 	}
 }
 
@@ -88,14 +88,65 @@ void deal(void) {
 	}
 }
 
+// ジョーカーの枚数
+int joker_count(void) {
+	int jk_count = 0;
+	// ジョーカーの枚数の初期化
+	for (int i = 0; i < JOKER; i++) {
+		count_joker[i] = 0;
+	}
+
+	for (int i = 0; i < HAND; i++) {
+		if (hand_card[i].joker > 0) {
+			jk_count++;
+		}
+	}
+	return jk_count;
+}
+
 //各カード昇順に並べ替え
 void card_sort(void) {
+	int i, j;
 	CARD tmp;
+
 	for (int i = 0; i < HAND; i++) {
-		if (hand_card[i - 1].num > hand_card[i].num) {
-			tmp = hand_card[i - 1];
-			hand_card[i - 1] = hand_card[i];
-			hand_card[i] = tmp;
+		if (hand_card[i].joker > 0) {
+			cout << "JOKER" << "  ";
+		}
+		else {
+			cout << mark_str[hand_card[i].mark] << num_str[hand_card[i].num] << "  ";
+		}
+	}
+	cout << endl;
+
+	int card_sum = 0;
+	int card_median = 0;
+
+	for (int i = 0; i < HAND; i++) {
+		card_sum++;
+		if (hand_card[i].joker > 0) {
+			tmp = hand_card[i];
+			hand_card[i] = hand_card[HAND - 1];
+			hand_card[HAND - 1] = tmp;
+		}
+	}
+
+	for (int i = 0; i < HAND - joker_count(); i++) {
+		for (int j = i; j < HAND - joker_count(); j++) {
+			if (hand_card[i].num == hand_card[j].num) {
+				if (hand_card[i].mark > hand_card[j].mark) {
+					tmp = hand_card[j];
+					hand_card[j] = hand_card[i];
+					hand_card[i] = tmp;
+				}
+			}
+			else {
+				if (hand_card[i].num > hand_card[j].num) {
+					tmp = hand_card[j];
+					hand_card[j] = hand_card[i];
+					hand_card[i] = tmp;
+				}
+			}
 		}
 	}
 }
@@ -105,10 +156,10 @@ void show(void) {
 	for (int i = 0; i < HAND; i++) {
 		if (i < HAND - 1) {
 			if (hand_card[i].joker == 0) {
-				cout << mark_str[hand_card[i].mark] << num_str[hand_card[i].num] << ", ";
+				cout << mark_str[hand_card[i].mark] << num_str[hand_card[i].num] << "  ";
 			}
 			else {
-				cout << "JOKER" << ", ";
+				cout << "JOKER" << "  ";
 			}
 		}
 		else {
@@ -195,22 +246,6 @@ void exchange_com(void) {
 			top++;
 		}
 	}
-}
-
-// ジョーカーの枚数
-int joker_count(void) {
-	int jk_count = 0;
-	// ジョーカーの枚数の初期化
-	for (int i = 0; i < JOKER; i++) {
-		count_joker[i] = 0;
-	}
-
-	for (int i = 0; i < HAND; i++) {
-		if (hand_card[i].joker > 0) {
-			jk_count++;
-		}
-	}
-	return jk_count;
 }
 
 // 各カードの集計情報閲覧
@@ -301,6 +336,7 @@ bool ThreeCards(void) {
 bool Straight(void) {
 	int i, j;
 	int change_num = 0;
+	card_sort();
 	if (joker_count() > 0) {
 		for (i = 0; i < NUMBER; i++) {
 			// ジョーカーあり
