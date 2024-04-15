@@ -7,11 +7,11 @@
       "RelativeMoniker": "D:0:0:{D1AF13C7-409D-4FB2-BB44-C805D0C67451}|Poker\\Poker.vcxproj|solutionrelative:Poker\\Poker.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1AF13C7-409D-4FB2-BB44-C805D0C67451}|Poker\\Poker.vcxproj|C:\\PROGRAM FILES\\MICROSOFT VISUAL STUDIO\\2022\\COMMUNITY\\VC\\TOOLS\\MSVC\\14.39.33519\\INCLUDE\\ALGORITHM||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{82AC2D0F-1ADE-44DF-B8A6-4B8C17C15FB7}|CaseNum\\CaseNum.vcxproj|C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\Pazzle\\Puzzle_Program\\CaseNum\\bruteforce.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{82AC2D0F-1ADE-44DF-B8A6-4B8C17C15FB7}|CaseNum\\CaseNum.vcxproj|solutionrelative:CaseNum\\bruteforce.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\include\\algorithm||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -29,7 +29,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "algorithm",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\include\\algorithm",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\include\\algorithm",
@@ -37,8 +37,7 @@
               "RelativeToolTip": "..\\..\\..\\..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.39.33519\\include\\algorithm",
               "ViewState": "AQIAACMfAAAAAAAAAAAawDEfAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-04-11T23:59:16.196Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-11T23:59:16.196Z"
             },
             {
               "$type": "Document",
@@ -48,14 +47,14 @@
               "RelativeDocumentMoniker": "Poker\\Poker.cpp",
               "ToolTip": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\Pazzle\\Puzzle_Program\\Poker\\Poker.cpp",
               "RelativeToolTip": "Poker\\Poker.cpp",
-              "ViewState": "AQIAAGIAAAAAAAAAAAAqwHMAAAACAAAA",
+              "ViewState": "AQIAAFsBAAAAAAAAAAAqwGgBAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-04-09T00:20:00.653Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "bruteforce.cpp",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\til\\E-Learning (C)\\Pazzle\\Puzzle_Program\\CaseNum\\bruteforce.cpp",
               "RelativeDocumentMoniker": "CaseNum\\bruteforce.cpp",
