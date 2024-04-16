@@ -5,9 +5,11 @@ def add(a, b):
   """整数型の引数a, bを加算する関数"""
   return a + b
 
+"""整数型の引数a, bを減算する関数"""
 def sub(a, b):
   return a - b
 
+"""整数型の引数a, bを加算し引数cを減算する関数"""
 def add_to_sub(a, b, c):
   return add(a, b) - c
 
