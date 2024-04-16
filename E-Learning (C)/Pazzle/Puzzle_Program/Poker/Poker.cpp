@@ -49,12 +49,10 @@ void init(void) {
 		for (int j = 0; j < NUMBER; j++) {
 			card[i * NUMBER + j].mark = i;
 			card[i * NUMBER + j].num = j;
-			// cout << "card[" << i * NUMBER + j << "] = " << mark_str[i] << num_str[j] << endl;
 		}
 	}
 	for (int i = 0; i < JOKER; i++) {
 		card[TOTAL_CARDS + (i - JOKER)].joker = i + 1;
-		// cout << "card[" << TOTAL_CARDS + (i - JOKER) << "] = " << joker_str[i] << endl;
 	}
 	top = 0;
 }
@@ -69,12 +67,7 @@ void shuffle(void) {
 		tmp = card[j];
 		card[j] = card[i];
 		card[i] = tmp;
-		/*if (card[i].joker == 0) {
-			cout << "card[" << i - 1 << "] = " << mark_str[card[i].mark] << num_str[card[i].num] << endl;
-		}
-		else {
-			cout << "card[" << i - 1 << "] = JOKER" << endl;
-		}*/
+
 		// シャッフル範囲縮小
 		i--;
 	}
@@ -172,10 +165,10 @@ void exchange_player(void) {
 	for (int i = 0; i < HAND; i++) {
 		while (true) {
 			if (hand_card[i].joker == 0) {
-				cout << i + 1 << "枚目: [" << mark_str[hand_card[i].mark] << num_str[hand_card[i].num] << "] 交換しますか？(Y/N) ";
+				cout << "[" << mark_str[hand_card[i].mark] << num_str[hand_card[i].num] << "]: 交換しますか？(Y/N) ";
 			}
 			else {
-				cout << i + 1 << "枚目: [" << "JOKER" << "] 交換しますか？(Y/N) ";
+				cout << "[" << "JOKER" << "] 交換しますか？(Y/N) ";
 			}
 			cin >> input;
 			if (input == 'y') {
@@ -325,8 +318,7 @@ bool ThreeCards(void) {
 // ストレート
 bool Straight(void) {
 	int i, j;
-	int card_sum = 0;
-	int card_min = 0;
+	int card_min = 0; // 手札の最小値
 	int dif_hand = 0; // 今の手札と次の手札の差
 	int cons_num = 0; // 連続した番号の数
 
@@ -334,10 +326,6 @@ bool Straight(void) {
 	// 手札の最小値が「10」より上の時
 	if (card_min > NUMBER - HAND) {
 		card_min = NUMBER - HAND;
-	}
-
-	for (int k = 0; k < HAND; k++) {
-		card_sum += hand_card[k].num + 2;
 	}
 
 	if (joker_count() > 0) {
@@ -355,42 +343,42 @@ bool Straight(void) {
 				if (k == (HAND - 2)) {
 					if (joker_count() == 2) {
 						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ _ Q K A
-							count_num[NUMBER - 5]++;
-							count_num[NUMBER - 4]++;
+							count_num[NUMBER - 5] = 1;
+							count_num[NUMBER - 4] = 1;
 						}
 						else {
-							count_num[hand_card[HAND - 2].num + 1]++;
-							count_num[hand_card[HAND - 2].num + 2]++;
+							count_num[hand_card[HAND - 2].num + 1] = 1;
+							count_num[hand_card[HAND - 2].num + 2] = 1;
 						}
 					}
 					if (joker_count() == 1) {
 						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ J Q K A
-							count_num[NUMBER - 5]++;
+							count_num[NUMBER - 5] = 1;
 						}
 						else {
-							count_num[hand_card[HAND - 2].num + 1]++;
+							count_num[hand_card[HAND - 2].num + 1] = 1;
 						}
 					}
 				}
 				break;
 			case 2:
 				if (hand_card[k + 1].num == NUMBER - 1) { // 例 10 J Q _ A
-					count_num[NUMBER - 2]++;
+					count_num[NUMBER - 2] = 1;
 				}
 				else {
-					count_num[hand_card[k].num + 1]++;
+					count_num[hand_card[k].num + 1] = 1;
 				}
 
 				break;
 			case 3:
 				if (joker_count() == 2) { // 例 10 J _ _ A
 					if (hand_card[k + 1].num == NUMBER - 1) {
-						count_num[NUMBER - 2]++;
-						count_num[NUMBER - 3]++;
+						count_num[NUMBER - 2] = 1;
+						count_num[NUMBER - 3] = 1;
 					}
 					else {
-						count_num[hand_card[k].num + 1]++;
-						count_num[hand_card[k].num + 2]++;
+						count_num[hand_card[k].num + 1] = 1;
+						count_num[hand_card[k].num + 2] = 1;
 					}
 				}
 				break;
@@ -398,7 +386,7 @@ bool Straight(void) {
 		}
 	}
 	
-	for (int i = 0; i < NUMBER; i++) {
+	for (int i = card_min; i < (card_min + HAND); i++) {
 		if (count_num[i] == 1) {
 			cons_num++;
 		}
@@ -473,6 +461,9 @@ bool StraightFlush(void) {
 // ロイヤルストレートフラッシュ
 bool RoyalStraightFlush(void) {
 	int change_num = 0;
+	int card_min = 0; // 手札の最小値
+	int dif_hand = 0; // 今の手札と次の手札の差
+	int cons_num = 0; // 連続した番号の数
 
 	if (!Flush()) {
 		return false;
@@ -480,40 +471,80 @@ bool RoyalStraightFlush(void) {
 	if (count_num[NUMBER - 1] != 1) {
 		return false;
 	}
-	for (int i = (NUMBER - 1) - (HAND - 1); i < NUMBER; i++) {
-		if (joker_count() > 0) {
-			change_num = joker_count();
-			// ジョーカーあり
-			if (count_num[i] == 0 && change_num != 0) {
-				switch (i) {
-				case 8:
-					count_num[i]++;
-					change_num--;
-					break;
-				case 9:
-					count_num[i]++;
-					change_num--;
-					break;
-				case 10:
-					count_num[i]++;
-					change_num--;
-					break;
-				case 11:
-					count_num[i]++;
-					change_num--;
-					break;
-				case 12:
-					count_num[i]++;
-					change_num--;
-					break;
+
+	card_min = hand_card[0].num;
+	// 手札の最小値が「10」より上の時
+	if (card_min > NUMBER - HAND) {
+		card_min = NUMBER - HAND;
+	}
+
+	if (joker_count() > 0) {
+		// ジョーカーあり
+		for (int k = 0; k < (HAND - 1) - joker_count(); k++) {
+			// 今の手札と次の手札の差
+			dif_hand = hand_card[k + 1].num - hand_card[k].num;
+
+			if (dif_hand == 0) {
+				break;
+			}
+			switch (dif_hand) {
+			case 1:
+				// 差が全て1の時
+				if (k == (HAND - 2)) {
+					if (joker_count() == 2) {
+						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ _ Q K A
+							count_num[NUMBER - 5] = 1;
+							count_num[NUMBER - 4] = 1;
+						}
+						else {
+							count_num[hand_card[HAND - 2].num + 1] = 1;
+							count_num[hand_card[HAND - 2].num + 2] = 1;
+						}
+					}
+					if (joker_count() == 1) {
+						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ J Q K A
+							count_num[NUMBER - 5] = 1;
+						}
+						else {
+							count_num[hand_card[HAND - 2].num + 1] = 1;
+						}
+					}
 				}
+				break;
+			case 2:
+				if (hand_card[k + 1].num == NUMBER - 1) { // 例 10 J Q _ A
+					count_num[NUMBER - 2] = 1;
+				}
+				else {
+					count_num[hand_card[k].num + 1] = 1;
+				}
+
+				break;
+			case 3:
+				if (joker_count() == 2) { // 例 10 J _ _ A
+					if (hand_card[k + 1].num == NUMBER - 1) {
+						count_num[NUMBER - 2] = 1;
+						count_num[NUMBER - 3] = 1;
+					}
+					else {
+						count_num[hand_card[k].num + 1] = 1;
+						count_num[hand_card[k].num + 2] = 1;
+					}
+				}
+				break;
 			}
 		}
-		if (count_num[i] != 1) {
-			return false;
+	}
+
+	for (int i = card_min; i < (card_min + HAND); i++) {
+		if (count_num[i] == 1) {
+			cons_num++;
 		}
 	}
-	return true;
+	if (cons_num == HAND) {
+		return true;
+	}
+	return false;
 }
 
 // ファイブカード
@@ -585,36 +616,53 @@ string hand_strenght(void) {
 	return strenght;
 }
 
-int main(void) {
-	// プレイヤー人数
-	int player = 1;
-	int com_player = 3;
-
-	init();
-	shuffle();
-	for (int i = 0; i < (player + com_player); i++) {
-		deal();
+// プレイヤーターンの時
+void player_turn(int player) {
+	for (int i = 0; i < player; i++) {
+		card_sort();
+		cout << i + 1 << "P :　" << setw(2);
+		show();
+		cout << endl;
+		exchange_player();
 	}
 
-	card_sort();
-	cout << "あなたの手札:　";
-	show();
-	cout << endl;
-
-	exchange_player();
-	card_sort();
-	cout << "あなたの手札:　";
-	show();
-	cards_count();
-	cout << " -> " << hand_strenght() << endl;
-
-	for (int i = 0; i < com_player;i++) {
-		exchange_com();
+	for (int i = 0; i < player; i++) {
 		card_sort();
-		cout << "COM_" << i + 1 << " の手札:　";
+		cout << setw(3) << i + 1 << "P :" << setw(2);
 		show();
 		cards_count();
 		cout << " -> " << hand_strenght() << endl;
 	}
+}
+
+// コンピュータターンの時
+void com_turn(int com) {
+	for (int i = 0; i < com; i++) {
+		exchange_com();
+		card_sort();
+		cout << "COM" << i + 1 << " :" << setw(2);
+		show();
+		cards_count();
+		cout << " -> " << hand_strenght() << endl;
+	}
+}
+
+// ゲーム開始
+void game_start(int player, int com) {
+	init();
+	shuffle();
+	for (int i = 0; i < (player + com); i++) {
+		deal();
+	}
+
+	player_turn(player);
+	com_turn(com);
+}
+
+int main(void) {
+	// プレイヤー人数
+	int player = 1;
+	int com_player = 3;
+	game_start(player, com_player);
 	return 0;
 }

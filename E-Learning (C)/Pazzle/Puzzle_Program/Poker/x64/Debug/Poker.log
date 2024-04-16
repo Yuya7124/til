@@ -1,6 +1,6 @@
 ﻿  Poker.cpp
-C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(109,9): warning C4101: 'j': ローカル変数は 1 度も使われていません。
-C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(109,6): warning C4101: 'i': ローカル変数は 1 度も使われていません。
-C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(327,9): warning C4101: 'j': ローカル変数は 1 度も使われていません。
-C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(327,6): warning C4101: 'i': ローカル変数は 1 度も使われていません。
+C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(102,9): warning C4101: 'j': ローカル変数は 1 度も使われていません。
+C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(102,6): warning C4101: 'i': ローカル変数は 1 度も使われていません。
+C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(320,9): warning C4101: 'j': ローカル変数は 1 度も使われていません。
+C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\Poker\Poker.cpp(320,6): warning C4101: 'i': ローカル変数は 1 度も使われていません。
   Poker.vcxproj -> C:\Users\user\source\repos\til\E-Learning (C)\Pazzle\Puzzle_Program\x64\Debug\Poker.exe
