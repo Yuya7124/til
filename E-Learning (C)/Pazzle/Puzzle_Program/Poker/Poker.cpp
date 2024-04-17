@@ -321,6 +321,7 @@ bool Straight(void) {
 	int card_min = 0; // 手札の最小値
 	int dif_hand = 0; // 今の手札と次の手札の差
 	int cons_num = 0; // 連続した番号の数
+	int num_change = joker_count(); // 数字に代替できる枚数(=ジョーカーの枚数)
 
 	card_min = hand_card[0].num;
 	// 手札の最小値が「10」より上の時
@@ -328,35 +329,56 @@ bool Straight(void) {
 		card_min = NUMBER - HAND;
 	}
 
-	if (joker_count() > 0) {
+	if (num_change > 0) {
 		// ジョーカーあり
 		for (int k = 0; k < (HAND - 1) - joker_count(); k++) {
 			// 今の手札と次の手札の差
 			dif_hand = hand_card[k + 1].num - hand_card[k].num;
 
 			if (dif_hand == 0) {
-				break;
+				if (k == (HAND - 2)) {
+					if (num_change == 2) {
+						if (hand_card[k + 1].num == NUMBER - 2) { // 例 _ J Q K _
+							count_num[NUMBER - 1] = 1;
+							count_num[NUMBER - 5] = 1;
+							num_change -= 2;
+						}
+					}
+					if (num_change == 1) {
+						if (hand_card[k + 1].num == NUMBER - 2) { // 例 10 J Q K _
+							count_num[NUMBER - 1] = 1;
+							num_change--;
+						}
+					}
+				}
+				else {
+					break;
+				}
 			}
 			switch (dif_hand) {
 			case 1:
 				// 差が全て1の時
 				if (k == (HAND - 2)) {
-					if (joker_count() == 2) {
+					if (num_change == 2) {
 						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ _ Q K A
 							count_num[NUMBER - 5] = 1;
 							count_num[NUMBER - 4] = 1;
+							num_change -= 2;
 						}
 						else {
 							count_num[hand_card[HAND - 2].num + 1] = 1;
 							count_num[hand_card[HAND - 2].num + 2] = 1;
+							num_change -= 2;
 						}
 					}
-					if (joker_count() == 1) {
+					if (num_change == 1) {
 						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ J Q K A
 							count_num[NUMBER - 5] = 1;
+							num_change--;
 						}
 						else {
 							count_num[hand_card[HAND - 2].num + 1] = 1;
+							num_change--;
 						}
 					}
 				}
@@ -364,21 +386,24 @@ bool Straight(void) {
 			case 2:
 				if (hand_card[k + 1].num == NUMBER - 1) { // 例 10 J Q _ A
 					count_num[NUMBER - 2] = 1;
+					num_change--;
 				}
 				else {
 					count_num[hand_card[k].num + 1] = 1;
+					num_change--;
 				}
-
 				break;
 			case 3:
-				if (joker_count() == 2) { // 例 10 J _ _ A
+				if (num_change == 2) { // 例 10 J _ _ A
 					if (hand_card[k + 1].num == NUMBER - 1) {
 						count_num[NUMBER - 2] = 1;
 						count_num[NUMBER - 3] = 1;
+						num_change -= 2;
 					}
 					else {
 						count_num[hand_card[k].num + 1] = 1;
 						count_num[hand_card[k].num + 2] = 1;
+						num_change -= 2;
 					}
 				}
 				break;
@@ -464,6 +489,7 @@ bool RoyalStraightFlush(void) {
 	int card_min = 0; // 手札の最小値
 	int dif_hand = 0; // 今の手札と次の手札の差
 	int cons_num = 0; // 連続した番号の数
+	int num_change = joker_count(); // 数字に代替できる枚数(=ジョーカーの枚数)
 
 	if (!Flush()) {
 		return false;
@@ -478,35 +504,56 @@ bool RoyalStraightFlush(void) {
 		card_min = NUMBER - HAND;
 	}
 
-	if (joker_count() > 0) {
+	if (num_change > 0) {
 		// ジョーカーあり
 		for (int k = 0; k < (HAND - 1) - joker_count(); k++) {
 			// 今の手札と次の手札の差
 			dif_hand = hand_card[k + 1].num - hand_card[k].num;
 
 			if (dif_hand == 0) {
-				break;
+				if (k == (HAND - 2)) {
+					if (num_change == 2) {
+						if (hand_card[k + 1].num == NUMBER - 2) { // 例 _ J Q K _
+							count_num[NUMBER - 1] = 1;
+							count_num[NUMBER - 5] = 1;
+							num_change -= 2;
+						}
+					}
+					if (num_change == 1) {
+						if (hand_card[k + 1].num == NUMBER - 2) { // 例 10 J Q K _
+							count_num[NUMBER - 1] = 1;
+							num_change--;
+						}
+					}
+				}
+				else { 
+					break; 
+				}
 			}
 			switch (dif_hand) {
 			case 1:
 				// 差が全て1の時
 				if (k == (HAND - 2)) {
-					if (joker_count() == 2) {
+					if (num_change == 2) {
 						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ _ Q K A
 							count_num[NUMBER - 5] = 1;
 							count_num[NUMBER - 4] = 1;
+							num_change -= 2;
 						}
 						else {
 							count_num[hand_card[HAND - 2].num + 1] = 1;
 							count_num[hand_card[HAND - 2].num + 2] = 1;
+							num_change -= 2;
 						}
 					}
-					if (joker_count() == 1) {
+					if (num_change == 1) {
 						if (hand_card[k + 1].num == NUMBER - 1) { // 例 _ J Q K A
 							count_num[NUMBER - 5] = 1;
+							num_change--;
 						}
 						else {
 							count_num[hand_card[HAND - 2].num + 1] = 1;
+							num_change--;
 						}
 					}
 				}
@@ -514,21 +561,25 @@ bool RoyalStraightFlush(void) {
 			case 2:
 				if (hand_card[k + 1].num == NUMBER - 1) { // 例 10 J Q _ A
 					count_num[NUMBER - 2] = 1;
+					num_change--;
 				}
 				else {
 					count_num[hand_card[k].num + 1] = 1;
+					num_change--;
 				}
 
 				break;
 			case 3:
-				if (joker_count() == 2) { // 例 10 J _ _ A
+				if (num_change == 2) { // 例 10 J _ _ A
 					if (hand_card[k + 1].num == NUMBER - 1) {
 						count_num[NUMBER - 2] = 1;
 						count_num[NUMBER - 3] = 1;
+						num_change -= 2;
 					}
 					else {
 						count_num[hand_card[k].num + 1] = 1;
 						count_num[hand_card[k].num + 2] = 1;
+						num_change -= 2;
 					}
 				}
 				break;
