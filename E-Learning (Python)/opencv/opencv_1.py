@@ -1,7 +1,7 @@
 import cv2
 import matplotlib.pyplot as plt
 
-path = "image/iOS_Photo_01.png"
+path = "image/iOS_Photo_02.jpg"
 img = cv2.imread(path)
 color = ("b", "g", "r")
 
