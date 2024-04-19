@@ -17,7 +17,7 @@ def histogram(img_src):
   for i in range(0, 255):
     v = hist[i]
     pt1 = (i, int(rows))
-    pt2 = (i, int(rows - (rows * (v / max_val))))
+    pt2 = (i, int(rows - (rows * (v / max_val))[0]))
 
     cv2.line(img_hst, pt1, pt2, (255, 255, 255))
 
@@ -71,6 +71,39 @@ def c_strengthen(min, max, table):
   for i in range(max, 255):
     table[i] = 255
 
+# 平均化オペレータ
+def ave_operater(img_src, x, y):
+  return cv2.blur(img_src, (x, y))
+
+# Gaussianオペレータ
+def gaussian_operater(img_src, x, y, sigma):
+  return cv2.GaussianBlur(img_src, (x, y), sigma)
+
+# バイラテラルオペレータ
+def bilateral_operater(img_src, x, sigma1, sigma2):
+  return cv2.bilateralFilter(img_src, x, sigma1, sigma2)
+
+# 中央値フィルタ処理
+def median_filtering(img_src, size):
+  return cv2.medianBlur(img_src, size)
+
+# Sobelオペレータ
+def sobel_operater(img_src):
+  img_tmp = cv2.Sobel(img_src, cv2.CV_32F, 2, 0)
+  return cv2.convertScaleAbs(img_tmp)
+
+# Laplacianオペレータ
+def laplacian_operator(img_src, size):
+  img_tmp = cv2.Laplacian(img_src, cv2.CV_32F, size)
+  return cv2.convertScaleAbs(img_tmp)
+
+# 鮮鋭化フィルタ
+def sharpening_filtering(img_src ,k):
+  op = np.array([[-k, -k, -k],
+                 [-k, 1 + 8 * k, -k],
+                 [-k, -k, -k]])
+  img_tmp =cv2.filter2D(img_src, -1, op)
+  return cv2.convertScaleAbs(img_src)
 
 img_type = '.png'
 file_src = 'image/iOS_Photo_01.png'
@@ -83,7 +116,7 @@ cv2.namedWindow('src')
 cv2.namedWindow('dst')
 histogram(img_src)
 
-img_dst = contrast(100, 200, img_src)
+img_dst = sharpening_filtering(img_src, 10.0)
 
 cv2.imshow('src', img_src)  # 入力画像表示
 cv2.imshow('dst', img_dst)  # 出力画像表示
