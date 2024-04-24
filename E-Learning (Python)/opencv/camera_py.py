@@ -23,7 +23,9 @@ tools = pyocr.get_available_tools()
 tool = tools[0]
 
 h5_file = "h5/drawing_text_test.h5"
-cap_file = "image/capture/sample.png"
+cap_file = "image/capture/draw_font/7.png"
+
+learning_times = 10   # 学習回数
 
 # モデル構築
 model = Sequential()
@@ -36,7 +38,8 @@ def mnist(model):
   # コンパイル
   model.compile(optimizer="sgd", loss="categorical_crossentropy", metrics=["accuracy"])
   
-  learning(model)
+
+  learning(model, learning_times)
 
   # モデル保存
   model.save(h5_file)
@@ -77,9 +80,9 @@ def layers(model):
   model.add(Dense(10))
   model.add(Activation("softmax"))
 
-def learning(model):
+def learning(model, times):
   # 学習実行
-  hist = model.fit(x_train, y_train, batch_size=200, epochs=10, verbose=1, validation_split=0.1)
+  hist = model.fit(x_train, y_train, batch_size=200, epochs=times, verbose=1, validation_split=0.1)
   
   # 評価
   score = model.evaluate(x_test, y_test, verbose=1)
