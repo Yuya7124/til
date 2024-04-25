@@ -44,5 +44,5 @@ def draw_free():
   result = np.argmax(predict, axis=1)
   print(f'{filename}: {result[0]}')
 
-draw_num()
-# draw_free()
+# draw_num()
+draw_free()
