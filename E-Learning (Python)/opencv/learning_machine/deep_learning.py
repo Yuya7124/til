@@ -28,7 +28,7 @@ metrics = ["loss", "accuracy"]
 def deep_learning(model):
   layers(model)  
   # コンパイル
-  model.compile(optimizer=SGD(learning_rate=0.1), loss="categorical_crossentropy", metrics=["accuracy"])
+  model.compile(optimizer=SGD(learning_rate=0.0001), loss="categorical_crossentropy", metrics=["accuracy"])
   learning(model, epoches_times)
   # モデル保存
   model.save(h5_file)
@@ -57,13 +57,13 @@ def layers(model):
   
   # ブーリング層2
   model.add(MaxPooling2D(2, 2))
-  model.add(Dropout(0.25))
+  model.add(Dropout(0.5))
 
   model.add(Flatten())
   # 全結合層
   model.add(Dense(height * width))
   model.add(Activation("relu"))
-  model.add(Dropout(0.125))
+  model.add(Dropout(0.25))
 
   # 出力層
   model.add(Dense(10))
