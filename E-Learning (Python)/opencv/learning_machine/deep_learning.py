@@ -28,7 +28,7 @@ metrics = ["loss", "accuracy"]
 def deep_learning(model):
   layers(model)  
   # コンパイル
-  model.compile(optimizer=SGD(learning_rate=0.1), loss="categorical_crossentropy", metrics=["accuracy"])
+  model.compile(optimizer=SGD(learning_rate=0.2), loss="categorical_crossentropy", metrics=["accuracy"])
   learning(model, epoches_times)
   # モデル保存
   model.save(h5_file)
@@ -68,6 +68,7 @@ def layers(model):
   # 出力層
   model.add(Dense(10))
   model.add(Activation("softmax"))
+
 
 def learning(model, epoches):
   # 学習実行

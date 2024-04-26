@@ -6,7 +6,7 @@ import pyocr.builders
 height = 28 
 width = 28
 
-cap_file = "image/capture/sample.png"
+cap_file = "image/capture/10.png"
 
 def camera():
   cap = cv2.VideoCapture(0)
