@@ -6,7 +6,7 @@ from keras.src.layers import Dense, Activation ,Conv2D, Flatten, MaxPooling2D, D
 from keras.src.utils.numerical_utils import to_categorical
 from keras.src.optimizers import SGD
 
-height = 28 
+height = 28
 width = 28
 (x_train, y_train), (x_test, y_test) = load_data()
 
@@ -105,7 +105,7 @@ def varification():
   column = 10
 
   for i in range(row * column):
-    y_true = y_test[i]
+    y_true = np.argmax(y_test[i])
     y_pred = np.argmax(model.predict(x_test[i].reshape(1, width, height)))
     if np.all(y_true == y_pred):
       result = "True"

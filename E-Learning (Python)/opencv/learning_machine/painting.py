@@ -1,24 +1,28 @@
 import numpy as np
 import pyxel
+import cv2
 from PIL import Image
 import text_capture
-import digit
+import PyxelUniversalFont as puf
 
 WindowWidth = 28
 WindowHeight = 28
 
-WindowSize = 64
+WindowSize = 128
 
 filename = "image/capture/screen_shot.png"
+pyxel_color = pyxel.COLOR_DARK_BLUE
+font = puf.Writer("Times New Roman.ttf")
 
 class Painting:
   window = [[0]*WindowSize for _ in range(WindowSize)]
   predigit = None
-
+  
   def __init__(self):
     pyxel.init(WindowSize, WindowSize)
     pyxel.mouse(visible=True)
     pyxel.run(self.update, self.draw)
+    
 
   def update(self):
     # 「Delete」キーでリセット
@@ -28,7 +32,7 @@ class Painting:
           self.window[y][x] = 0
 
     # マウスの右ボタンで描画
-    if pyxel.btnp(pyxel.MOUSE_BUTTON_RIGHT, hold=0, repeat=1):
+    if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT, hold=0, repeat=1):
       x, y = pyxel.mouse_x, pyxel.mouse_y
       dx = [ 0,-1, 0, 1, 0,
             -2,-1, 0, 1, 2,
@@ -55,6 +59,7 @@ class Painting:
       # 「Q」キーで終了
       quit()
   
+  # 描画機能
   def draw(self):
     pyxel.cls(pyxel.COLOR_WHITE)
 
@@ -62,9 +67,10 @@ class Painting:
       for x in range(pyxel.width):
         if self.window[y][x] == -1:
           pyxel.pset(x, y, pyxel.COLOR_BLACK)
+    
+    self.painting_ui()
 
-    pyxel.text(0, 0, 'Predict: {}'.format(self.predigit), pyxel.COLOR_DARK_BLUE)
-
+  # 画像保存
   def _saveImage(self):
     img = Image.new('RGB', (pyxel.width, pyxel.height))
     for y in range(pyxel.height):
@@ -75,6 +81,23 @@ class Painting:
           img.putpixel((x, y), (0, 0, 0))
     img = img.resize((WindowWidth, WindowHeight), Image.BICUBIC)
     img.save(filename)
+    self.binary_data(filename)
     print("Image has saved correctly.")
+  
+  # 2値化処理
+  def binary_data(self, filename):
+    src_img = cv2.imread(filename, 0)
+
+    _, th = cv2.threshold(src_img, 0, 255, cv2.THRESH_OTSU)
+    th = cv2.bitwise_not(th)
+    th = cv2.GaussianBlur(th,(9,9), 0)
+    cv2.imwrite(filename, th)
+  
+  # UI
+  def painting_ui(self):
+    pyxel.text(21, 108, 's: Save', pyxel_color)
+    pyxel.text(1, 115, 'Delete: Clear', pyxel_color)
+    pyxel.text(21, (WindowSize - 7), 'q: Quit', pyxel_color)
+    pyxel.text(1, 1, 'Predict: {}'.format(self.predigit), pyxel_color)
 
 Painting()
