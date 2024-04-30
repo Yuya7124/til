@@ -51,7 +51,7 @@ def ocr_engine(filepass):
   txt = tool.image_to_string(Image.open(filepass), lang="eng")
   print(f'{filepass}:\n{txt}')
 
-filename = cap_file + 'screen_shot' + img_type
-draw_num(28, 28)
+# filename = cap_file + 'screen_shot' + img_type
+# draw_num(28, 28)
 # print(f'{filename}: {draw_free(filename, 28, 28)}')
 # ocr_engine(filename)

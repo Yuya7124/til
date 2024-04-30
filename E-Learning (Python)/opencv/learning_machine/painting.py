@@ -2,6 +2,7 @@ import numpy as np
 import pyxel
 from PIL import Image
 import text_capture
+import digit
 
 WindowWidth = 28
 WindowHeight = 28
@@ -49,6 +50,7 @@ class Painting:
       # 「S」キーで保存
       self._saveImage()
       self.predigit = text_capture.draw_free(filename, WindowWidth, WindowHeight)
+      # self.predigit = digit.load_predict(filename)
     if pyxel.btn(pyxel.KEY_Q):
       # 「Q」キーで終了
       quit()
