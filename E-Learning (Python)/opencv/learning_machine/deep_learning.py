@@ -43,6 +43,7 @@ def deep_learning(model):
   # モデル削除
   del model
 
+# 畳み込み層
 def layers(model):
   # 畳み込み層追加
   model.add(Reshape((height, width, 1)))
@@ -77,7 +78,7 @@ def layers(model):
   model.add(Dense(62))
   model.add(Activation("softmax"))
 
-
+# 機械学習
 def learning(model, epoches):
   # 学習実行
   hist = model.fit(x_train, y_train, batch_size=200, epochs=epoches, verbose=1, validation_split=0.2, validation_data=(x_test, y_test))
@@ -88,6 +89,7 @@ def learning(model, epoches):
   graph(hist)
   varification()
 
+# グラフ描画
 def graph(history):
   plt.figure(figsize=(10, 5))
 
@@ -107,6 +109,7 @@ def graph(history):
     plt.legend()
   plt.show()
 
+# 検証
 def varification():
   fig = plt.figure(figsize=(12, 8))
   row = 5
