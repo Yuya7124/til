@@ -3,7 +3,6 @@ import pyxel
 import cv2
 from PIL import Image
 import text_capture
-import PyxelUniversalFont as puf
 
 WindowWidth = 28
 WindowHeight = 28
@@ -12,7 +11,12 @@ WindowSize = 128
 
 filename = "image/capture/screen_shot.png"
 pyxel_color = pyxel.COLOR_DARK_BLUE
-font = puf.Writer("Times New Roman.ttf")
+
+text_char = [i for i in range(0, 10)]
+upper = [chr(i) for i in range(ord('A'),ord('Z')+1)]
+lower = [chr(i) for i in range(ord('a'),ord('z')+1)]
+text_char.extend(upper)
+text_char.extend(lower)
 
 class Painting:
   window = [[0]*WindowSize for _ in range(WindowSize)]
@@ -53,7 +57,8 @@ class Painting:
     if pyxel.btn(pyxel.KEY_S):
       # 「S」キーで保存
       self._saveImage()
-      self.predigit = text_capture.draw_free(filename, WindowWidth, WindowHeight)
+      text = text_capture.draw_free(filename, WindowWidth, WindowHeight)
+      self.predigit = text_char[text]
       # self.predigit = digit.load_predict(filename)
     if pyxel.btn(pyxel.KEY_Q):
       # 「Q」キーで終了
