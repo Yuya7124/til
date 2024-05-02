@@ -26,7 +26,7 @@ y_test = to_categorical(y_test)
 
 h5_file = "h5/drawing_text_test.h5"
 
-epoches_times = 10   # 学習回数
+epoches_times = 30   # 学習回数
 
 # モデル構築
 model = Sequential()
