@@ -7,7 +7,10 @@ from keras.src.utils.numerical_utils import to_categorical
 from keras.src.optimizers import SGD
 from emnist import extract_training_samples, extract_test_samples
 
+import text_list
+
 text_char = []
+textList = text_list.char_list()
 
 height = 28
 width = 28
@@ -36,7 +39,7 @@ metrics = ["loss", "accuracy"]
 def deep_learning(model):
   layers(model)  
   # コンパイル
-  model.compile(optimizer=SGD(learning_rate=0.35), loss="categorical_crossentropy", metrics=["accuracy"])
+  model.compile(optimizer=SGD(learning_rate=0.5), loss="categorical_crossentropy", metrics=["accuracy"])
   learning(model, epoches_times)
   # モデル保存
   model.save(h5_file)
@@ -61,7 +64,7 @@ def layers(model):
   model.add(Dropout(0.75))
 
   # 畳み込み層3
-  model.add(Conv2D(32, (3, 3)))
+  model.add(Conv2D(64, (3, 3)))
   model.add(Activation("relu"))
   
   # ブーリング層2
@@ -124,7 +127,7 @@ def varification():
       result = "False"
     plt.subplot(row,column, i+1)
     plt.imshow(x_test[i].reshape(28, 28), cmap="gray")
-    plt.title(f"No.{i} - {result}\ny_true:{y_true}, y_pred:{y_pred}")
+    plt.title(f"No.{i} - {result}\ny_true:{textList[y_true]}, y_pred:{textList[y_pred]}")
     plt.axis("off")
 
   fig.tight_layout()

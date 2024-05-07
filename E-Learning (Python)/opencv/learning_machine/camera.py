@@ -25,8 +25,9 @@ def camera():
                      , (255, 255, 0)
                      , 5)
     
-    # ocr(img, width, height)
+    ocr(img, width, height)
     # img_dst = cv2.flip(img_src, filpCode = 0)
+    camera_ui(img)
 
     cv2.imshow('src', img)  # 入力画像表示
     # cv2.imshow('dst', img_dst)  # 出力画像表示
@@ -48,9 +49,8 @@ def ocr(img, width, height):
   tool = tools[0]
   img_dst = img[100:height-200, 100:width-200]
   PIL_Image = Image.fromarray(img_dst)
-  text = tool.image_to_string(PIL_Image, lang='jpn', builder=pyocr.builders.TextBuilder(tesseract_layout=6))
-  if text != "" :
-    print(text)
+  text = tool.image_to_string(PIL_Image, lang='eng', builder=pyocr.builders.TextBuilder(tesseract_layout=6))
+  cv2.putText(img, f"Result: {text}", (10, 20), cv2.FONT_HERSHEY_DUPLEX, 0.75, (255, 255 ,0))
 
 # 撮影処理
 def flash(frame, height, width):
@@ -63,5 +63,8 @@ def flash(frame, height, width):
   th = cv2.bitwise_not(th)
   th = cv2.GaussianBlur(th,(9,9), 0)
   cv2.imwrite(cap_file, th)
+
+def camera_ui(img):
+  cv2.putText(img, "s: Save  q: Quit", (10, 475), cv2.FONT_HERSHEY_DUPLEX, 0.5, (255, 255,0))
 
 camera()
