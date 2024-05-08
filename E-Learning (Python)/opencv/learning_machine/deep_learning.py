@@ -39,7 +39,7 @@ metrics = ["loss", "accuracy"]
 def deep_learning(model):
   layers(model)  
   # コンパイル
-  model.compile(optimizer=SGD(learning_rate=0.5), loss="categorical_crossentropy", metrics=["accuracy"])
+  model.compile(optimizer=SGD(learning_rate=0.0005), loss="categorical_crossentropy", metrics=["accuracy"])
   learning(model, epoches_times)
   # モデル保存
   model.save(h5_file)
@@ -114,9 +114,9 @@ def graph(history):
 
 # 検証
 def varification():
-  fig = plt.figure(figsize=(12, 8))
-  row = 5
-  column = 5
+  fig = plt.figure(figsize=(16, 12))
+  row = 10
+  column = 6
 
   for i in range(row * column):
     y_true = np.argmax(y_test[i])

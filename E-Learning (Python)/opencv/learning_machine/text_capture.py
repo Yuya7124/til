@@ -61,18 +61,28 @@ def ocr_engine(filepass):
   # print(f"{filepass}:  {txt}")
 
 def read_text(filepass):
-  out_text = cv2.imread(filepass)
-  
-  # 画像サイズ調整
-  out_text = img_size_control(out_text)
+  out_texts = cv2.imread(filepass)
+  txt_count = 0
+  filepassList = []
 
-  contours = img_binary(out_text)
+  # 画像サイズ調整
+  out_texts = img_size_control(out_texts)
+
+  contours = img_binary(out_texts)
 
   # 文字検出
-  for res2 in contours:
-    x, y , w, h = cv2.boundingRect(res2)
-    cv2.rectangle(out_text, (x + 3 , y + 3), (x + w - 3 , y + h - 3), (255, 255, 0), 1)
-  show_window(out_text)
+  for res in contours:
+    x, y , w, h = cv2.boundingRect(res)
+    bold = 1 # 線の太さ
+    out_text = out_texts[(y + bold): (y + h - bold), (x + bold) : (x + w - bold)]
+    filepassList.append(cap_file + "get_text2/get_text_" + str(txt_count) + img_type)
+    cv2.imwrite(filepassList[txt_count], out_text)
+    binary_data(filepassList[txt_count])
+    result = draw_free(filepassList[txt_count], 28, 28)
+    cv2.putText(out_texts, textList[result], (x - 3, y - 3), cv2.FONT_HERSHEY_PLAIN, 1, (255, 175, 0))
+    cv2.rectangle(out_texts, (x , y), (x + w , y + h), (255, 255, 0), bold)
+    txt_count += 1
+  show_window(out_texts)
 
 # 画像表示
 def show_window(out):
@@ -89,7 +99,7 @@ def img_size_control(img):
     img = cv2.resize(img, (int(width * 2), int(height * 2)), cv2.INTER_CUBIC)
   return img
 
-# 2値化処理
+# 2値化処理(戻り値あり)
 def img_binary(img):
   # グレースケール変換
   img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -100,6 +110,15 @@ def img_binary(img):
   contours = cv2.findContours(th, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
   return contours
 
+# 2値化処理(戻り値なし)
+def binary_data(img):
+  src_img = cv2.imread(img, 0)
+
+  _, th = cv2.threshold(src_img, 0, 255, cv2.THRESH_OTSU)
+  th = cv2.bitwise_not(th)
+  th = cv2.GaussianBlur(th,(3,3), 1)
+  cv2.imwrite(img, th)
+
 # print(draw_free(cap_file + "screen_shot.png", 28, 28))
 
-read_text(img_file + "System-RMDF-Pro.png")
+read_text(img_file + "handwritten_1.png")
