@@ -54,11 +54,11 @@ def layers(model):
   model.add(Reshape((height, width, 1)))
 
   # 畳み込み層1
-  model.add(Conv2D(64, (3, 3)))
+  model.add(Conv2D(128, (3, 3)))
   model.add(Activation("relu"))
 
   # 畳み込み層2
-  model.add(Conv2D(32, (3, 3)))
+  model.add(Conv2D(64, (3, 3)))
   model.add(Activation("relu"))
 
   # ブーリング層
@@ -66,7 +66,7 @@ def layers(model):
   model.add(Dropout(0.75))
 
   # 畳み込み層3
-  model.add(Conv2D(32, (3, 3)))
+  model.add(Conv2D(64, (3, 3)))
   model.add(Activation("relu"))
   
   # ブーリング層2
@@ -87,11 +87,13 @@ def layers(model):
 def learning(model, epoches):
   # 学習実行
   hist = model.fit(x_train, y_train, batch_size=200, epochs=epoches, verbose=1, validation_split=0.2, validation_data=(x_test, y_test))
+  # グラフ表示
+  graph(hist)
   # 評価
   score = model.evaluate(x_test, y_test, verbose=1)
   print("Acc: ", score[1])
-  # グラフ表示
-  graph(hist)
+  
+  # 検証
   varification()
 
 # グラフ描画
