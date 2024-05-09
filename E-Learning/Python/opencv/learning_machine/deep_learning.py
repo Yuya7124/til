@@ -6,6 +6,7 @@ from keras.src.layers import Dense, Activation ,Conv2D, Flatten, MaxPooling2D, D
 from keras.src.utils.numerical_utils import to_categorical
 from keras.src.optimizers import SGD
 from emnist import extract_training_samples, extract_test_samples
+from fastprogress import master_bar, progress_bar
 
 import text_list
 
@@ -29,7 +30,8 @@ y_test = to_categorical(y_test)
 
 h5_file = "h5/drawing_text_test.h5"
 
-epoches_times = 30   # 学習回数
+epoches_times = 25   # 学習回数
+batches_num = 10  # 1エボック当たりのバッチ数
 
 # モデル構築
 model = Sequential()
@@ -52,11 +54,11 @@ def layers(model):
   model.add(Reshape((height, width, 1)))
 
   # 畳み込み層1
-  model.add(Conv2D(128, (3, 3)))
+  model.add(Conv2D(64, (3, 3)))
   model.add(Activation("relu"))
 
   # 畳み込み層2
-  model.add(Conv2D(64, (3, 3)))
+  model.add(Conv2D(32, (3, 3)))
   model.add(Activation("relu"))
 
   # ブーリング層
@@ -64,7 +66,7 @@ def layers(model):
   model.add(Dropout(0.75))
 
   # 畳み込み層3
-  model.add(Conv2D(64, (3, 3)))
+  model.add(Conv2D(32, (3, 3)))
   model.add(Activation("relu"))
   
   # ブーリング層2
