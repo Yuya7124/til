@@ -31,6 +31,7 @@ y_test = to_categorical(y_test)
 h5_file = "h5/drawing_text_test.h5"
 
 epoches_times = 25   # 学習回数
+
 batches_num = 10  # 1エボック当たりのバッチ数
 
 # モデル構築
@@ -41,7 +42,7 @@ metrics = ["loss", "accuracy"]
 def deep_learning(model):
   layers(model)  
   # コンパイル
-  model.compile(optimizer=SGD(learning_rate=0.0005), loss="categorical_crossentropy", metrics=["accuracy"])
+  model.compile(optimizer=SGD(learning_rate=0.005), loss="categorical_crossentropy", metrics=["accuracy"])
   learning(model, epoches_times)
   # モデル保存
   model.save(h5_file)
@@ -54,7 +55,7 @@ def layers(model):
   model.add(Reshape((height, width, 1)))
 
   # 畳み込み層1
-  model.add(Conv2D(128, (3, 3)))
+  model.add(Conv2D(64, (3, 3)))
   model.add(Activation("relu"))
 
   # 畳み込み層2
@@ -66,7 +67,11 @@ def layers(model):
   model.add(Dropout(0.75))
 
   # 畳み込み層3
-  model.add(Conv2D(64, (3, 3)))
+  model.add(Conv2D(32, (3, 3)))
+  model.add(Activation("relu"))
+
+   # 畳み込み層4
+  model.add(Conv2D(32, (3, 3)))
   model.add(Activation("relu"))
   
   # ブーリング層2
