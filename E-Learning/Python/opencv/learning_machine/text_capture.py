@@ -75,11 +75,11 @@ def read_text(filepass):
     x, y , w, h = cv2.boundingRect(res)
     bold = 1 # 線の太さ
     out_text = out_texts[(y + bold): (y + h - bold), (x + bold) : (x + w - bold)]
-    filepassList.append(cap_file + "get_text2/get_text_" + str(txt_count) + img_type)
+    filepassList.append(cap_file + "get_text3/get_text_" + str(txt_count) + img_type)
     cv2.imwrite(filepassList[txt_count], out_text)
     binary_data(filepassList[txt_count])
     result = draw_free(filepassList[txt_count], 28, 28)
-    cv2.putText(out_texts, textList[result], (x - 3, y - 3), cv2.FONT_HERSHEY_PLAIN, 1, (255, 175, 0))
+    cv2.putText(out_texts, textList[result], (x - 3, y - 3), cv2.FONT_ITALIC, 0.5, (255, 175, 0))
     cv2.rectangle(out_texts, (x , y), (x + w , y + h), (255, 255, 0), bold)
     txt_count += 1
   show_window(out_texts)
@@ -121,4 +121,4 @@ def binary_data(img):
 
 # print(draw_free(cap_file + "screen_shot.png", 28, 28))
 
-read_text(img_file + "handwritten_2" + img_type)
+read_text(img_file + "handwritten_3" + img_type)

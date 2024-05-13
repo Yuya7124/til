@@ -55,7 +55,7 @@ def layers(model):
   model.add(Reshape((height, width, 1)))
 
   # 畳み込み層1
-  model.add(Conv2D(64, (3, 3)))
+  model.add(Conv2D(128, (3, 3)))
   model.add(Activation("relu"))
 
   # 畳み込み層2
@@ -67,7 +67,7 @@ def layers(model):
   model.add(Dropout(0.75))
 
   # 畳み込み層3
-  model.add(Conv2D(32, (3, 3)))
+  model.add(Conv2D(64, (3, 3)))
   model.add(Activation("relu"))
 
    # 畳み込み層4
